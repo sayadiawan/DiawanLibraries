@@ -17,7 +17,7 @@ float Parameter::getValue() const
     return _value;
 }
 
-void geturl(String idDevice, String *link,String *name, float *offsite1, float *koreksi1) {
+void geturlDiawanTrial(String idDevice, String *link,String *name, float *offsite1, float *koreksi1) {
   WiFiClient client;
   HTTPClient http;
   String serverPath =  "http://diawan.io/api/get_url/" + idDevice;
@@ -48,7 +48,7 @@ void geturl(String idDevice, String *link,String *name, float *offsite1, float *
 
 
 
-void connectDiawanParcial( String link, String email, String pass, String userId, String idDevice,Parameter all_parameter[], String *name, float *offsite1,int *restart ,int *reset ) {
+void connectDiawanParcial( String link, String email, String pass, String userId, String idDevice,Parameter all_parameter[], String *name, float *offsite1,int *restart ,int *reset, int jumlah_parameter) {
   WiFiClient client;
   HTTPClient http;
   String load = "{}";
