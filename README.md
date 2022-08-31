@@ -2,17 +2,19 @@
 
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="image/logo.png" alt="Logo" width="200" height="80">
+    <img src="image/logo.png" alt="Logo" width="200" height="60">
   </a>
   </div>
   <h3 align="center">For Your Solution IoT Platform</h3>
   
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## Tentang Diawan
 
+
+
+Diawan adalah jasa penyedia platform IoT yang dirintis pada tahun 2020, diawan merupakan anak perusahaan ELIT yaitu perusahaan yang bergerak di bidang perkembangan software.
+Dengan diawan Pengguna bisa bebas mengolah data-data pengukuran dari device, pengguna dapat melakukan skema kontrol, Pengguna juga dapat melakukan visualisasi data dengan banyak pilihan model tampilan, dan pengguna bebas melakukan reporting data dengan berbagai periode waktu. Diawan juga mempunyai fitur WhatsApp Notification yang bisa mempermudah pengguna dan banyak lainnya
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
 
 Here's why:
 * Your time should be focused on creating something amazing. A project that solves a problem and helps others
