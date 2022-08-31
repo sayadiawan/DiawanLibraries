@@ -45,6 +45,34 @@ void geturlDiawanTrial(String idDevice, String *link,String *name, float *offsit
   delay(3000);
 }
 
+void geturlDiawan(String idDevice, String *link,String *name, float *offsite1, float *koreksi1) {
+  WiFiClient client;
+  HTTPClient http;
+  String serverPath =  "http://diawan.io/api/get_url/" + idDevice;
+  http.begin(client, serverPath.c_str());
+  int httpResponseCode = http.GET();
+
+  if (httpResponseCode > 0) {
+    Serial.print("HTTP Response code: ");
+    Serial.println(httpResponseCode);
+    String payload = http.getString();
+    Serial.println(payload);
+    DynamicJsonDocument doc(1024);
+    String input = payload;
+    deserializeJson(doc, input);
+    JsonObject obj = doc.as<JsonObject>();
+    *link = obj["url"]["push"].as<String>();
+    *offsite1 = obj["offsite"]["offsite_data1"].as<float>(); // Bisa di Edit (tambahkan data menyesuaikan jumlah parameter yang digunakan)
+    *koreksi1 = obj["correction"]["correction_data1"].as<float>(); // Bisa di Edit (tambahkan data menyesuaikan jumlah parameter yang digunakan)
+   *name = obj["name"].as<String>();
+  }else {
+    Serial.print("Error code: ");
+    Serial.println(httpResponseCode);
+  }
+  http.end();
+  delay(3000);
+}
+
 
 
 
