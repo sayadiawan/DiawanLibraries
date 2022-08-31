@@ -6,17 +6,26 @@
   </a>
   </div>
   <h3 align="center">For Your Solution IoT Platform</h3>
+  <br>
   
 <!-- ABOUT THE PROJECT -->
 ## Tentang Diawan
 
 
 
-Diawan adalah jasa penyedia platform IoT yang dirintis pada tahun 2020, diawan merupakan anak perusahaan ELIT yaitu perusahaan yang bergerak di bidang perkembangan software.
-Dengan diawan Pengguna bisa bebas mengolah data-data pengukuran dari device, pengguna dapat melakukan skema kontrol, Pengguna juga dapat melakukan visualisasi data dengan banyak pilihan model tampilan, dan pengguna bebas melakukan reporting data dengan berbagai periode waktu. Diawan juga mempunyai fitur WhatsApp Notification yang bisa mempermudah pengguna dan banyak lainnya
-kamu bisa kunjungi situsnya di (https://diawan.io)
+Diawan adalah jasa penyedia platform IoT yang dirintis pada tahun 2020, diawan merupakan anak perusahaan ELIT yaitu perusahaan yang bergerak di bidang perkembangan software.<br>
+Dengan diawan Pengguna bisa bebas mengolah data-data pengukuran dari device, pengguna dapat melakukan skema kontrol, Pengguna juga dapat melakukan visualisasi data dengan banyak pilihan model tampilan, dan pengguna bebas melakukan reporting data dengan berbagai periode waktu. Diawan juga mempunyai fitur WhatsApp Notification yang bisa mempermudah pengguna dan banyak lainnya.
+kamu bisa kunjungi situsnya di https://diawan.io
 
-Here's why:
+## Fitur Diawan
+
+- [ ] Monitoring
+- [ ] Controlling
+- [ ] Reporting
+- [ ] Realtime 
+- [ ] WhatsApp Notification
+
+Kelebihan :
 * Your time should be focused on creating something amazing. A project that solves a problem and helps others
 * You shouldn't be doing the same tasks over and over like creating a README from scratch
 * You should implement DRY principles to the rest of your life :smile:
