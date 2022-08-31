@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="image/logo.png" alt="Logo" width="400" height="60">
+    <img src="image/logo.png" alt="Logo" width="400" height="70">
   </a>
   </div>
   <h3 align="center">For Your Solution IoT Platform</h3>
