@@ -27,7 +27,7 @@ You can visit the site at https://diawan.io
 
 
 # HOW TO CONNECT THE DEVICE TO DIAWAN.IO
-1. Download library Diawan
+1. Download Diawan library
    ```
    https://github.com/sayadiawan/DiawanLibraries
    ```
