@@ -1,3 +1,4 @@
+<a name="readme-top"></a>
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
     <img src="images/logo.png" alt="Logo" width="400" height="80">
@@ -22,17 +23,22 @@ You can visit the site at https://diawan.io
 - [ ] Reporting
 - [ ] Realtime 
 - [ ] WhatsApp Notification
+<br>
+
 
 # HOW TO CONNECT THE DEVICE TO DIAWAN.IO
 1. Download library Diawan
    ```
    https://github.com/sayadiawan/DiawanLibraries
    ```
-2. Put the file in the directory 'libraries' in the Arduiono installation file
-3. Ambil Identitas device anda yang ada di website diawan.io <br>     <div align="Left"><a href="https://github.com/github_username/repo_name"><img src="images/ss.png" alt="SS"></a></div>
-4. Salin Identitas device, lalu letakkan di bagian source kode berikut<br><div align="Left"><a href="https://github.com/github_username/repo_name"><img src="images/ard.PNG" alt="ARD"></a></div>
+2. Put the file in the directory `libraries` in the Arduiono installation file
+3. Take the identity of your device on the diawan.io website, login and visit <br> ```https://diawan.io/device-management/connect/8420be72-c927-4a7a-ae3f-0bb0237bee03```<br> <br>     <div align="Left"><a href="https://github.com/github_username/repo_name"><img src="images/ss.png" alt="SS"></a></div>
+4. Copy the Device Identity and then place it in the following code source section <br><div align="Left"><a href="https://github.com/github_username/repo_name"><img src="images/ard.PNG" alt="ARD"></a></div>
 5. Run the Arduino file
 6. Once successful, connect to your device's wifi
 7. Then connect your local wifi
-8. After that open the diawan website and go to the 'live show device' page. To open the 'live show device' you need to 'login' and visit <br> ```https://diawan.io/device-management/live/8420be72-c927-4a7a-ae3f-0bb0237bee03```
+8. After that open the diawan website and go to the `live show device` page. To open the `live show device` you need to `login` and visit <br> ```https://diawan.io/device-management/live/8420be72-c927-4a7a-ae3f-0bb0237bee03```
 9. If you see a change in the sensor value, your device has successfully connected
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
