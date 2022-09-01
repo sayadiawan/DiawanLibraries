@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="image/logo.png" alt="Logo" width="400" height="80">
+    <img src="images/logo.png" alt="Logo" width="400" height="80">
   </a>
   </div>
   <h3 align="center">For Your Solution IoT Platform</h3>
@@ -29,8 +29,8 @@ You can visit the site at https://diawan.io
    https://github.com/sayadiawan/DiawanLibraries
    ```
 2. Put the file in the directory 'libraries' in the Arduiono installation file
-3. Ambil Identitas device anda yang ada di website diawan.io <br>     <div align="Left"><a href="https://github.com/github_username/repo_name"><img src="image/ss.png" alt="SS"></a></div>
-4. Salin Identitas device, lalu letakkan di bagian source kode berikut<br><div align="Left"><a href="https://github.com/github_username/repo_name"><img src="image/ard.png" alt="ARD"></a></div>
+3. Ambil Identitas device anda yang ada di website diawan.io <br>     <div align="Left"><a href="https://github.com/github_username/repo_name"><img src="images/ss.png" alt="SS"></a></div>
+4. Salin Identitas device, lalu letakkan di bagian source kode berikut<br><div align="Left"><a href="https://github.com/github_username/repo_name"><img src="images/ard.PNG" alt="ARD"></a></div>
 5. Run the Arduino file
 6. Once successful, connect to your device's wifi
 7. Then connect your local wifi
