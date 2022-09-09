@@ -1,4 +1,6 @@
 #include "diawan.h"
+#define ARRAY_SIZE(array) ((sizeof(array))/(sizeof(array[0])))
+
 Parameter::Parameter() {
 }
 Parameter::Parameter(char* name, float value) {
@@ -85,15 +87,16 @@ void connectDiawanParcial( String link, String email, String pass, String userId
 
   int array[]={1,2,3,4,4};
   Serial.print("size= ");
-  if(all_parameter[7].getName()[0])
-  {
-    Serial.println(sizeof(all_parameter[7].getName()));
-    Serial.println(sizeof(all_parameter[2].getName()));
-    /* string isn't empty! */
-  }
-
-  Serial.println(sizeof(array));
-  for (byte i = 0; i < 2; i = i + 1) {
+  // if(all_parameter[7].getName()[0])
+  // {
+  //   Serial.println(sizeof(all_parameter[7].getName()));
+  //   Serial.println(sizeof(all_parameter[2].getName()));
+  //   /* string isn't empty! */
+  // }
+  Serial.println(sizeof(all_parameter));
+   Serial.println(ARRAY_SIZE(all_parameter),DEC);
+   Serial.println(sizeof(all_parameter[1]));
+  for (byte i = 0; i < jumlah_parameter; i = i + 1) {
     Serial.print("name= ");
     Serial.println(all_parameter[i].getValue());
   }
