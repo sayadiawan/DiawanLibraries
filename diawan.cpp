@@ -133,6 +133,7 @@ void connectDiawanTrial( String link, String email, String pass, String userId, 
   HTTPClient http;
   String load = "{}";
   http.begin(client, link);
+  
   String jsonStr = "";
 
   http.addHeader("Content-Type", "application/json");
