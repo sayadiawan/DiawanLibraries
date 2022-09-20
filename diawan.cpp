@@ -3,17 +3,24 @@
 
 Parameter::Parameter() {
 }
-Parameter::Parameter(char* name, float value) {
+Parameter::Parameter(char* name, float value, float offsite) {
     _name  = name;
     _value  = value;
+     _offsite  = offsite;
 }
-
+Parameter::Parameter(char* name, float offsite) {
+    _name  = name;
+    _offsite  = offsite;
+}
 
 char* Parameter::getName() const
 {
     return _name;
 }
-
+float Parameter::getOffsite() const
+{
+    return _offsite;
+}
 float Parameter::getValue() const
 {
     return _value;
@@ -53,6 +60,8 @@ void geturlDiawan(String idDevice, String *link,String *name, float *offsite1, f
   String serverPath =  "http://diawan.io/api/get_url/" + idDevice;
   http.begin(client, serverPath.c_str());
   int httpResponseCode = http.GET();
+
+  // *parameter[8]={Parameter("data1", 1),Parameter("data2", 2)};
 
   if (httpResponseCode > 0) {
     Serial.print("HTTP Response code: ");

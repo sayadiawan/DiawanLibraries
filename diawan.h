@@ -10,11 +10,14 @@
 class Parameter {
   public:
     Parameter();
-    Parameter(char* name, float value);
+    Parameter(char* name, float value, float offsite);
+    Parameter(char* name, float offsite);
     char* getName() const;
     float getValue() const; 
+    float getOffsite() const; 
     char* _name ; 
-    float _value ; 
+    float _value ;
+    float _offsite ; 
       
 };
 void connectDiawan2( String link, String email, String pass, String userId, String idDevice,Parameter all_parameter[], String *name, float *offsite1,int *restart ,int *reset );
