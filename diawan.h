@@ -22,4 +22,5 @@ void geturlDiawanTrial(String idDevice, String *link,String *name, float *offsit
 void connectDiawanParcial( String link, String email, String pass, String userId, String idDevice,Parameter all_parameter[], String *name, float *offsite1,int *restart ,int *reset, int jumlah_parameter);
 void geturlDiawan(String idDevice, String *link,String *name, float *offsite1, float *koreksi1);
 void connectDiawan( String link, String email, String pass, String userId, String idDevice,float *tempC, String *name, float *offsite1,int *restart ,int *reset );
+void connectDiawanTrial( String link, String email, String pass, String userId, String idDevice,float tempC, String *name, float *offsite1,int *restart ,int *reset );
 #endif
