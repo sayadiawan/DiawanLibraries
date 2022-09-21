@@ -17,9 +17,35 @@ char* Parameter::getName() const
 {
     return _name;
 }
+
+void Parameter::setVar(char* name, float offsite, float correction) {
+   _name  = name;
+    _offsite  = offsite;
+     _correction  = correction;
+}
+
+void Parameter::setValue(float value) {
+   _value  = value;
+}
+
+void Parameter::setMin(float min) {
+   _min  = min;
+}
+
+void Parameter::setMax(float max) {
+   _max  = max;
+}
+
+void Parameter::setOffsite(float offsite) {
+   _offsite  = offsite;
+}
 float Parameter::getOffsite() const
 {
     return _offsite;
+}
+float Parameter::getCorrection() const
+{
+    return _correction;
 }
 float Parameter::getValue() const
 {
@@ -54,7 +80,7 @@ void geturlDiawanTrial(String idDevice, String *link,String *name, float *offsit
   delay(3000);
 }
 
-void geturlDiawan(String idDevice, String *link,String *name, float *offsite1, float *koreksi1) {
+void geturlDiawan(String idDevice, String *link,String *name, Parameter **parameter) {
   WiFiClient client;
   HTTPClient http;
   String serverPath =  "http://diawan.io/api/get_url/" + idDevice;
@@ -62,6 +88,7 @@ void geturlDiawan(String idDevice, String *link,String *name, float *offsite1, f
   int httpResponseCode = http.GET();
 
   // *parameter[8]={Parameter("data1", 1),Parameter("data2", 2)};
+  
 
   if (httpResponseCode > 0) {
     Serial.print("HTTP Response code: ");
@@ -73,8 +100,19 @@ void geturlDiawan(String idDevice, String *link,String *name, float *offsite1, f
     deserializeJson(doc, input);
     JsonObject obj = doc.as<JsonObject>();
     *link = obj["url"]["push"].as<String>();
-    *offsite1 = obj["offsite"]["offsite_data1"].as<float>(); // Bisa di Edit (tambahkan data menyesuaikan jumlah parameter yang digunakan)
-    *koreksi1 = obj["correction"]["correction_data1"].as<float>(); // Bisa di Edit (tambahkan data menyesuaikan jumlah parameter yang digunakan)
+    int count = obj["count"].as<int>();
+    *parameter = (Parameter *) malloc(sizeof(Parameter) * (count+1));
+    // (*parameter)[count]=NULL;
+    int i;
+    for (i = 0; i < count; i++) {
+      int iterasi = i+1;
+      float offset = obj["offsite"]["offsite_data"+String(iterasi)].as<float>();
+      float correction = obj["correction"]["correction_data"+String(iterasi)].as<float>();
+      (*parameter)[i].setVar(strdup(("data"+String(iterasi)).c_str()),offset,correction);
+    }
+
+    (*parameter)[i].setVar("",NULL,NULL);
+        
    *name = obj["name"].as<String>();
   }else {
     Serial.print("Error code: ");
@@ -87,32 +125,45 @@ void geturlDiawan(String idDevice, String *link,String *name, float *offsite1, f
 
 
 
-void connectDiawanParcial( String link, String email, String pass, String userId, String idDevice,Parameter all_parameter[], String *name, float *offsite1,int *restart ,int *reset, int jumlah_parameter) {
+
+
+
+void connectDiawan( String link, String email, String pass, String userId, String idDevice, String *name,int *restart ,int *reset, Parameter **parameter)  {
   WiFiClient client;
   HTTPClient http;
   String load = "{}";
   http.begin(client, link);
   String jsonStr = "";
 
-  int array[]={1,2,3,4,4};
-  Serial.print("size= ");
   // if(all_parameter[7].getName()[0])
   // {
   //   Serial.println(sizeof(all_parameter[7].getName()));
   //   Serial.println(sizeof(all_parameter[2].getName()));
   //   /* string isn't empty! */
   // }
-  Serial.println(sizeof(all_parameter));
-   Serial.println(ARRAY_SIZE(all_parameter),DEC);
-   Serial.println(sizeof(all_parameter[1]));
-  for (byte i = 0; i < jumlah_parameter; i = i + 1) {
-    Serial.print("name= ");
-    Serial.println(all_parameter[i].getValue());
+
+       
+
+  int count=0;
+  for (int i = 0; (*parameter)[i].getName()!=""; i = i + 1) {
+    count++;
   }
 
   http.addHeader("Content-Type", "application/json");
   //EDIT (tambahkan data menyesuaikan jumlah parameter yang digunakan)
-  int httpResponseCode = http.POST("{\"email\":\"" + email + "\",\"password\":\"" + pass + "\", \"userId\":\"" + userId + "\",\"idDevice\":\"" + idDevice + "\",\"value\":{\"data1\":1.0}}");
+
+  String parameter_string="{";
+  for (int i = 0; (*parameter)[i].getName()!=""; i = i + 1) {
+    Serial.println((*parameter)[i].getValue());
+    if((count-1)==i){
+      parameter_string=parameter_string+"\""+(*parameter)[i].getName()+"\":"+(*parameter)[i].getValue();
+    }else{
+      parameter_string=parameter_string+"\""+(*parameter)[i].getName()+"\":"+(*parameter)[i].getValue()+",";
+    }
+  }
+  parameter_string=parameter_string+"}";
+
+  int httpResponseCode = http.POST("{\"email\":\"" + email + "\",\"password\":\"" + pass + "\", \"userId\":\"" + userId + "\",\"idDevice\":\"" + idDevice + "\",\"value\":"+parameter_string+"}");
   Serial.print("HTTP Response code: ");
   Serial.println(httpResponseCode);
 
@@ -127,7 +178,11 @@ void connectDiawanParcial( String link, String email, String pass, String userId
     JsonObject obj = doc.as<JsonObject>();
     
     // EDIT (tambahkan data menyesuaikan jumlah parameter yang digunakan)
-    *offsite1 = obj["result"]["offsite"]["offsite_value_data1"].as<float>();
+    for (int i = 0; (*parameter)[i].getName()!=""; i = i + 1) {
+      (*parameter)[i].setOffsite(obj["result"]["offsite"]["offsite_value_data"+String(i+1)].as<float>());
+      (*parameter)[i].setMin(obj["result"]["min"]["min_data"+String(i+1)].as<float>());
+      (*parameter)[i].setMax(obj["result"]["max"]["max_data"+String(i+1)].as<float>());
+    }
     *name = obj["result"]["name"].as<String>();
     *restart = obj["result"]["restart"].as<int>();
     *reset = obj["result"]["reset"].as<int>();
@@ -135,7 +190,67 @@ void connectDiawanParcial( String link, String email, String pass, String userId
     http.end();
     delay(3000);
   }
- }
+}
+
+
+
+void connectDiawanWifi( String link, String email, String pass, String userId, String idDevice,int wifi, String *name,int *restart ,int *reset, Parameter **parameter)  {
+  WiFiClient client;
+  HTTPClient http;
+  String load = "{}";
+  http.begin(client, link);
+  String jsonStr = "";
+
+  // if(all_parameter[7].getName()[0])
+  // {
+  //   Serial.println(sizeof(all_parameter[7].getName()));
+  //   Serial.println(sizeof(all_parameter[2].getName()));
+  //   /* string isn't empty! */
+  // }
+
+       
+
+
+  http.addHeader("Content-Type", "application/json");
+  //EDIT (tambahkan data menyesuaikan jumlah parameter yang digunakan)
+
+  String parameter_string="{";
+  for (int i = 0; (*parameter)[i].getName()!=""; i = i + 1) {
+    Serial.println((*parameter)[i].getValue());
+    parameter_string=parameter_string+"\""+(*parameter)[i].getName()+"\":"+(*parameter)[i].getValue()+",";
+    
+  }
+   parameter_string=parameter_string+"\"wifi\":"+wifi+"}";
+   
+
+  int httpResponseCode = http.POST("{\"email\":\"" + email + "\",\"password\":\"" + pass + "\", \"userId\":\"" + userId + "\",\"idDevice\":\"" + idDevice + "\",\"value\":"+parameter_string+"}");
+  Serial.print("HTTP Response code: ");
+  Serial.println(httpResponseCode);
+
+  if (httpResponseCode != 200) {
+    Serial.println("Data tidak terkirim");
+  }else {
+    load = http.getString();
+    Serial.print(load);
+    DynamicJsonDocument doc(1024);
+    String input = load;
+    deserializeJson(doc, input);
+    JsonObject obj = doc.as<JsonObject>();
+    
+    // EDIT (tambahkan data menyesuaikan jumlah parameter yang digunakan)
+    for (int i = 0; (*parameter)[i].getName()!=""; i = i + 1) {
+      (*parameter)[i].setOffsite(obj["result"]["offsite"]["offsite_value_data"+String(i+1)].as<float>());
+      (*parameter)[i].setMin(obj["result"]["min"]["min_data"+String(i+1)].as<float>());
+      (*parameter)[i].setMax(obj["result"]["max"]["max_data"+String(i+1)].as<float>());
+    }
+    *name = obj["result"]["name"].as<String>();
+    *restart = obj["result"]["restart"].as<int>();
+    *reset = obj["result"]["reset"].as<int>();
+ 
+    http.end();
+    delay(3000);
+  }
+}
 
 void connectDiawanTrial( String link, String email, String pass, String userId, String idDevice,float tempC, String *name, float *offsite1,int *restart ,int *reset ) {
   WiFiClient client;
