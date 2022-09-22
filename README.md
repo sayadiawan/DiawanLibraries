@@ -31,9 +31,8 @@ Anda dapat mengunjungi situsnya di https://diawan.io
    ```
    https://diawan.io/file-dokumentasi/DOKUMENTASI.zip
    ```
-   <br><br>
-   Download Diawan library
-   ```
+   <br>Download Library Diawan <br>
+      ```
    https://github.com/sayadiawan/DiawanLibraries
    ```
 2. Letakkan file library di direktori `libraries` dalam file instalasi Arduiono
@@ -49,9 +48,13 @@ Anda dapat mengunjungi situsnya di https://diawan.io
 8. Setelah itu buka website diawan dan pergi ke halaman `live show device`. untuk membuka `live show device` kamu harus `login` dan kunjungi <br>
 
    ```
-   https://diawan.io/device-management/live/8420be72-c927-4a7a-ae3f-0bb0237bee03
+   IOT Management > Device Management > klik AKSI dibagian device > Live Action Device
    ```
 9. Jika Anda melihat perubahan nilai sensor, perangkat Anda telah berhasil tersambung
 
 
 <p align="right">(<a href="#readme-top">Kembali ke Awal</a>)</p>
+
+<br>
+<br>
+## PENJELASAN SOURCE KODE ARDUINO (SOURCE KODE KONEKSI DEVICE KE DIAWAN) 
