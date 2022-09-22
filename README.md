@@ -12,9 +12,9 @@
 
 
 
-Diawan is an IoT platform provider service that was initiated in 2020, diawan is a subsidiary of ELIT, a company engaged in software development.<br>
-With diawan, Users can freely process measurement data from devices, users can carry out control schemes, users can also visualize data with many choices of display models, and users are free to report data with various time periods. Diawan also has a WhatsApp Notification feature that can make it easier for users and many others.
-You can visit the site at https://diawan.io
+Diawan merupakan penyedia layanan penyedia platform IoT yang diinisiasi pada tahun 2020, diawan merupakan anak perusahaan dari ELIT, perusahaan yang bergerak di bidang pengembangan software.<br>
+Dengan diawan, Pengguna dapat dengan bebas memproses data pengukuran dari perangkat, pengguna dapat melakukan skema kontrol, pengguna juga dapat memvisualisasikan data dengan banyak pilihan model tampilan, dan pengguna bebas melaporkan data dengan berbagai periode waktu. Diawan juga memiliki fitur Notifikasi WhatsApp yang dapat memudahkan pengguna dan masih banyak lainnya.
+Anda dapat mengunjungi situsnya di https://diawan.io
 
 ## Features Of Diawan.io
 
@@ -26,27 +26,32 @@ You can visit the site at https://diawan.io
 <br>
 
 
-# HOW TO CONNECT THE DEVICE TO DIAWAN.IO
-1. Download Diawan library
+# CARA MENGHUBUNGKAN PERANGKAT KE DIAWAN.IO
+1. Download Source Code Library untuk Koneksikan Device ke Diawan.io
+   ```
+   https://diawan.io/file-dokumentasi/DOKUMENTASI.zip
+   ```
+   <br><br>
+   Download Diawan library
    ```
    https://github.com/sayadiawan/DiawanLibraries
    ```
-2. Put the file in the directory `libraries` in the Arduiono installation file
-3. Take the identity of your device on the diawan.io website, login and visit 
+2. Letakkan file library di direktori `libraries` dalam file instalasi Arduiono
+3. Ambil identitas perangkat Anda di situs web diawan.io, login dan kunjungi 
     ```
-   https://diawan.io/device-management/connect/8420be72-c927-4a7a-ae3f-0bb0237bee03
+   IOT Management > Device Management > klik AKSI dibagian device > Connect Device
    ```
    <div align="Left"><a href="https://github.com/github_username/repo_name"><img src="images/ss.png" alt="SS"></a></div>
-4. Copy the Device Identity and then place it in the following code source section <br><div align="Left"><a href="https://github.com/github_username/repo_name"><img src="images/ard.PNG" alt="ARD"></a></div>
-5. Run the Arduino file
-6. Once successful, connect to your device's wifi
-7. Then connect your local wifi
-8. After that open the diawan website and go to the `live show device` page. To open the `live show device` you need to `login` and visit <br>
+4. Salin Identitas Perangkat lalu letakkan di bagian sumber kode berikut <br><div align="Left"><a href="https://github.com/github_username/repo_name"><img src="images/ard.PNG" alt="ARD"></a></div>
+5. Jalankan file Arduino
+6. Setelah berhasil, sambungkan ke wifi Device IoT Anda
+7. Kemudian hubungkan wifi lokal Anda
+8. Setelah itu buka website diawan dan pergi ke halaman `live show device`. untuk membuka `live show device` kamu harus `login` dan kunjungi <br>
 
    ```
    https://diawan.io/device-management/live/8420be72-c927-4a7a-ae3f-0bb0237bee03
    ```
-9. If you see a change in the sensor value, your device has successfully connected
+9. Jika Anda melihat perubahan nilai sensor, perangkat Anda telah berhasil tersambung
 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">Kembali ke Awal</a>)</p>
