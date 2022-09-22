@@ -32,6 +32,7 @@ class Parameter {
     float _correction ; 
       
 };
+
 void geturlDiawanTrial(String idDevice, String *link,String *name, float *offsite1, float *koreksi1);
 void geturlDiawan(String idDevice, String *link,String *name, Parameter **parameter);
 void connectDiawanWifi( String link, String email, String pass, String userId, String idDevice,int wifi, String *name,int *restart ,int *reset, Parameter **parameter);
