@@ -87,9 +87,6 @@ void geturlDiawan(String idDevice, String *link,String *name, Parameter **parame
   http.begin(client, serverPath.c_str());
   int httpResponseCode = http.GET();
 
-  // *parameter[8]={Parameter("data1", 1),Parameter("data2", 2)};
-  
-
   if (httpResponseCode > 0) {
     Serial.print("HTTP Response code: ");
     Serial.println(httpResponseCode);
@@ -102,7 +99,7 @@ void geturlDiawan(String idDevice, String *link,String *name, Parameter **parame
     *link = obj["url"]["push"].as<String>();
     int count = obj["count"].as<int>();
     *parameter = (Parameter *) malloc(sizeof(Parameter) * (count+1));
-    // (*parameter)[count]=NULL;
+
     int i;
     for (i = 0; i < count; i++) {
       int iterasi = i+1;
@@ -135,13 +132,6 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
   http.begin(client, link);
   String jsonStr = "";
 
-  // if(all_parameter[7].getName()[0])
-  // {
-  //   Serial.println(sizeof(all_parameter[7].getName()));
-  //   Serial.println(sizeof(all_parameter[2].getName()));
-  //   /* string isn't empty! */
-  // }
-
        
 
   int count=0;
@@ -150,7 +140,6 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
   }
 
   http.addHeader("Content-Type", "application/json");
-  //EDIT (tambahkan data menyesuaikan jumlah parameter yang digunakan)
 
   String parameter_string="{";
   for (int i = 0; (*parameter)[i].getName()!=""; i = i + 1) {
@@ -201,18 +190,8 @@ void connectDiawanWifi( String link, String email, String pass, String userId, S
   http.begin(client, link);
   String jsonStr = "";
 
-  // if(all_parameter[7].getName()[0])
-  // {
-  //   Serial.println(sizeof(all_parameter[7].getName()));
-  //   Serial.println(sizeof(all_parameter[2].getName()));
-  //   /* string isn't empty! */
-  // }
-
-       
-
 
   http.addHeader("Content-Type", "application/json");
-  //EDIT (tambahkan data menyesuaikan jumlah parameter yang digunakan)
 
   String parameter_string="{";
   for (int i = 0; (*parameter)[i].getName()!=""; i = i + 1) {
@@ -261,7 +240,7 @@ void connectDiawanTrial( String link, String email, String pass, String userId, 
   String jsonStr = "";
 
   http.addHeader("Content-Type", "application/json");
-  //EDIT (tambahkan data menyesuaikan jumlah parameter yang digunakan)
+
   int httpResponseCode = http.POST("{\"email\":\"" + email + "\",\"password\":\"" + pass + "\", \"userId\":\"" + userId + "\",\"idDevice\":\"" + idDevice + "\",\"value\":{\"data1\":" + tempC + "}}");
   Serial.print("HTTP Response code: ");
   Serial.println(httpResponseCode);
@@ -276,7 +255,6 @@ void connectDiawanTrial( String link, String email, String pass, String userId, 
     deserializeJson(doc, input);
     JsonObject obj = doc.as<JsonObject>();
     
-    // EDIT (tambahkan data menyesuaikan jumlah parameter yang digunakan)
     *offsite1 = obj["result"]["offsite"]["offsite_value_data1"].as<float>();
     *name = obj["result"]["name"].as<String>();
     *restart = obj["result"]["restart"].as<int>();
