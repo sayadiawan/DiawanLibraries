@@ -31,7 +31,7 @@ Anda dapat mengunjungi situsnya di https://diawan.io
    ```
    https://diawan.io/file-dokumentasi/DOKUMENTASI.zip
    ```
-   <br>Download Library Diawan <br>
+   Download Library Diawan <br>
       ```
    https://github.com/sayadiawan/DiawanLibraries
    ```
@@ -57,4 +57,104 @@ Anda dapat mengunjungi situsnya di https://diawan.io
 
 <br>
 <br>
-## PENJELASAN SOURCE KODE ARDUINO (SOURCE KODE KONEKSI DEVICE KE DIAWAN) 
+
+## PENJELASAN SOURCE KODE ARDUINO UNTUK KONEKSIKAN DEVICE KE DIAWAN
+* Source kode berikut adalah library yang di perlukan
+   ```
+        #include <Arduino.h>
+        #include <WiFiManager.h>
+        #include <Wire.h>
+        #include <ESP8266WiFi.h>
+        #include "diawan.h"
+        #include <FS.h>
+        #include "SparkFunHTU21D.h"
+   ```
+* Berikut Source Kode untuk menginisialisasikan parameter yang anda gunakan, sebagai contoh saya menggunakan parameter `tempC` dan `humidity`
+Anda bisa menambah atau mengurangi parameter sesuai yang anda inginkan.
+
+   ```
+      String link;
+      float tempC, humidity;
+      int restart, reset;
+   ```
+* Bagian Source code diatas adalah bagian inisialisasi akun diawan anda yang telah di jelaskan di bagian cara Koneksikan Device
+
+  ```
+      //USER ID, ID Device, Email Accoount, Email Password di dapat dari website diawan.io
+      String userId = "--------------------------";
+      //ID Device
+      String idDevice = "------------------------";
+
+      //Email Account
+      String email = "-------------";
+      //Email Password
+      String pass = "--------";
+  ```
+* Bagian Script Kode diatas merupakan class yang berisi atribut atribut dari sebuah parameter yang ada di file `diawan.h`
+
+   ```
+        Parameter *parameter;
+   ```
+* Source Kode diatas bagian untuk koneksikan Wifi
+
+    ```
+        void setup() {
+
+          //Koneksikan Wifi
+          wifiManager.setConfigPortalTimeout(300);
+          if (wifiManager.autoConnect(node_ID)) {
+            Serial.print("IP address: ");
+            Serial.println(WiFi.localIP());
+            delay(1000);
+          }
+    ```
+* Pada bagian atas isikan nilai pada setiap parameter, Setelah mengisi nilai sensor, lalu memasang nilai hasil sensor ke variable parameter. Jumlah variable tergantung jumlah parameter yang digunakan.
+
+    ```
+        tempC =  // isi nilai sensor
+        humidity =  //isi nilai sensor
+
+        parameter[0].setValue(tempC);
+        parameter[1].setValue(humidity);
+    ```
+    <details>
+  <summary>NOTE</summary>
+     Urutan parameter disesuaikan dengan urutan yang ada di connect device diawan
+ * Source Kode diatas bagian Restart dan Reset
+Untuk memastikan apakah device sudah terhubung diawan, anda bisa cek di diawan.io dihalaman Live Device
+    ```
+        //mengecek jika nilai restart 1 device akan merestart, jika 0 tidak melakukan apa-apa
+        if(restart==1){
+          ESP.restart();
+        }
+
+        //mengecek jika nilai reset 1 device akan mereset wifi, jika 0 tidak melakukan apa-apa
+        if(reset==1){
+          wifiManager.resetSettings();
+          ESP.restart();
+        }
+
+    ```
+
+
+<p align="right">(<a href="#readme-top">Kembali ke Awal</a>)</p>
+
+### PENJELASAN FUNGSI PARAMETER
+Fungsi parameter berisi atribut atribut yang ada di file `diawan.h` seperti :
+```
+      float _offsite ; 
+      float _min ; 
+      float _max ; 
+      float _correction ;
+```
+Anda bisa memanggil atribut tersebut dengan cara mengetikkan kode berikut :
+```
+        float offsitetemperature=parameter[0].getOffsite();
+        float mintemperature=parameter[0].getMin();
+        float maxtemperature=parameter[0].getMax();
+        float correctiontemperature=parameter[0].getCorrection();
+```
+Letakkkan kode diatas di bagian setelah bagian untuk melakukan push atau sebelum bagian restart Wifi
+
+  <p align="right">(<a href="#readme-top">Kembali ke Awal</a>)</p>
+
