@@ -8,7 +8,7 @@
   <br>
   
 <!-- ABOUT THE PROJECT -->
-## About Diawan.io
+## Tentang Diawan.io
 
 
 
@@ -16,7 +16,7 @@ Diawan merupakan penyedia layanan penyedia platform IoT yang diinisiasi pada tah
 Dengan diawan, Pengguna dapat dengan bebas memproses data pengukuran dari perangkat, pengguna dapat melakukan skema kontrol, pengguna juga dapat memvisualisasikan data dengan banyak pilihan model tampilan, dan pengguna bebas melaporkan data dengan berbagai periode waktu. Diawan juga memiliki fitur Notifikasi WhatsApp yang dapat memudahkan pengguna dan masih banyak lainnya.
 Anda dapat mengunjungi situsnya di https://diawan.io
 
-## Features Of Diawan.io
+## Fitur Diawan.io
 
 - [ ] Monitoring
 - [ ] Controlling
@@ -26,7 +26,7 @@ Anda dapat mengunjungi situsnya di https://diawan.io
 <br>
 
 
-# CARA MENGHUBUNGKAN PERANGKAT KE DIAWAN.IO
+# CARA MENGHUBUNGKAN PERANGKAT KE DIAWAN.IO (Library ESP8266)
 1. Download Source Code Library untuk Koneksikan Device ke Diawan.io
    ```
    https://diawan.io/file-dokumentasi/DOKUMENTASI.zip
@@ -58,7 +58,7 @@ Anda dapat mengunjungi situsnya di https://diawan.io
 <br>
 <br>
 
-## PENJELASAN SOURCE KODE ARDUINO UNTUK KONEKSIKAN DEVICE KE DIAWAN
+## PENJELASAN SOURCE KODE ARDUINO UNTUK KONEKSIKAN DEVICE KE DIAWAN (Library ESP8266) 
 * Source kode berikut adalah library yang di perlukan
    ```
         #include <Arduino.h>
