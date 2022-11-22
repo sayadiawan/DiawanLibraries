@@ -1,10 +1,20 @@
 #ifndef DIAWAN_H
 #define DIAWAN_H
 #include <Arduino.h>
+
+
+#ifdef ESP32
+#include <WiFi.h>
+#include <HTTPClient.h>
+#endif
+#ifdef ESP8266
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
+#endif
 #include <WiFiClient.h>
 #include <ArduinoJson.h>
+
+
 
 
 class Parameter {
@@ -12,18 +22,21 @@ class Parameter {
     Parameter();
     Parameter(char* name, float value, float offsite);
     Parameter(char* name, float offsite);
+    
     char* getName() const;
+
     float getValue() const; 
+    
     float getMin() const;
     float getMax() const; 
+    float getOffsite() const; 
+    float getCorrection() const; 
+    
     void setVar(char* name, float offsite, float correction);
     void setValue(float value);
-    float getOffsite() const; 
     void setOffsite(float offsite);
     void setMin(float min);
     void setMax(float max);
-    
-     float getCorrection() const; 
     char* _name ; 
     float _value ;
     float _offsite ; 
