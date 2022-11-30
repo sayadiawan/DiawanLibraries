@@ -23,6 +23,11 @@ void Parameter::setVar(char* name, float offsite, float correction) {
     _offsite  = offsite;
      _correction  = correction;
        _value  = NULL;
+         _valueString  = "";
+}
+
+void Parameter::setValueString(String valueString) {
+   _valueString  = valueString;
 }
 
 void Parameter::setValue(float value) {
@@ -51,6 +56,11 @@ float Parameter::getCorrection() const
 float Parameter::getValue() const
 {
     return _value;
+}
+
+float Parameter::getValueString() const
+{
+    return _valueString;
 }
 
 void geturlDiawanTrial(String idDevice, String *link,String *name, float *offsite1, float *koreksi1) {
@@ -139,7 +149,7 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
 
   int count=0;
   // Serial.print((*parameter)[26].getValue());
-  for (int i = 0; (*parameter)[i].getValue()!=NULL; i = i + 1) {
+  for (int i = 0; (*parameter)[i].getValue()!=NULL||(*parameter)[i].getValueString()!=""; i = i + 1) {
      
     count++;
 
@@ -150,12 +160,22 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
   String parameter_string="{";
   for (int i = 0; i<count; i = i + 1) {
     if((count-1)==i){
-      parameter_string=parameter_string+"\"data"+(i+1)+"\":"+(*parameter)[i].getValue();
+      if((*parameter)[i].getValue()!=NULL){
+        parameter_string=parameter_string+"\"data"+(i+1)+"\":"+(*parameter)[i].getValue();
+      }else{
+        parameter_string=parameter_string+"\"data"+(i+1)+"\":\""+(*parameter)[i].getValueString()+"\"";
+      }
     }else{
-      parameter_string=parameter_string+"\"data"+(i+1)+"\":"+(*parameter)[i].getValue()+",";
+      if((*parameter)[i].getValue()!=NULL){
+        parameter_string=parameter_string+"\"data"+(i+1)+"\":"+(*parameter)[i].getValue()+",";
+      }else{
+        parameter_string=parameter_string+"\"data"+(i+1)+"\":\""+(*parameter)[i].getValueString()+"\",";
+      }
     }
   }
   parameter_string=parameter_string+"}";
+
+  Serial.print(parameter_string);
 
 
 

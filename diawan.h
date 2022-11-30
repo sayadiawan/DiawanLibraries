@@ -26,6 +26,7 @@ class Parameter {
     char* getName() const;
 
     float getValue() const; 
+    String getValueString() const; 
     
     float getMin() const;
     float getMax() const; 
@@ -34,11 +35,13 @@ class Parameter {
     
     void setVar(char* name, float offsite, float correction);
     void setValue(float value);
+    void setValueString(String valueString);
     void setOffsite(float offsite);
     void setMin(float min);
     void setMax(float max);
     char* _name ; 
     float _value ;
+    String _valueString ;
     float _offsite ; 
     float _min ; 
     float _max ; 
