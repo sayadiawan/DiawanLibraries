@@ -26,7 +26,7 @@ void Parameter::setVar(char* name, float offsite, float correction) {
          _valueString  = "";
 }
 
-void Parameter::setValueString(String valueString) {
+void Parameter::setValueString(char* valueString) {
    _valueString  = valueString;
 }
 
@@ -58,7 +58,7 @@ float Parameter::getValue() const
     return _value;
 }
 
-float Parameter::getValueString() const
+char* Parameter::getValueString() const
 {
     return _valueString;
 }
