@@ -22,7 +22,7 @@ void Parameter::setVar(char* name, float offsite, float correction) {
    _name  = name;
     _offsite  = offsite;
      _correction  = correction;
-       _value  = NULL;
+       _value  = -99999999999999999.99999;
          _valueString  = "";
 }
 
@@ -149,7 +149,7 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
 
   int count=0;
   // Serial.print((*parameter)[26].getValue());
-  for (int i = 0; (*parameter)[i].getValue()!=NULL||(*parameter)[i].getValueString()!=""; i = i + 1) {
+  for (int i = 0; (*parameter)[i].getValue()!=-99999999999999999.99999||(*parameter)[i].getValueString()!=""; i = i + 1) {
      
     count++;
 
@@ -160,13 +160,13 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
   String parameter_string="{";
   for (int i = 0; i<count; i = i + 1) {
     if((count-1)==i){
-      if((*parameter)[i].getValue()!=NULL){
+      if((*parameter)[i].getValue()!=-99999999999999999.99999){
         parameter_string=parameter_string+"\"data"+(i+1)+"\":"+(*parameter)[i].getValue();
       }else{
         parameter_string=parameter_string+"\"data"+(i+1)+"\":\""+(*parameter)[i].getValueString()+"\"";
       }
     }else{
-      if((*parameter)[i].getValue()!=NULL){
+      if((*parameter)[i].getValue()!=-99999999999999999.99999){
         parameter_string=parameter_string+"\"data"+(i+1)+"\":"+(*parameter)[i].getValue()+",";
       }else{
         parameter_string=parameter_string+"\"data"+(i+1)+"\":\""+(*parameter)[i].getValueString()+"\",";
