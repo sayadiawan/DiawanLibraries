@@ -26,12 +26,14 @@ void Parameter::setVar(char* name, float offsite, float correction) {
          _valueString  = "";
 }
 
-void Parameter::setValueString(char* valueString) {
-   _valueString  = valueString;
+void Parameter::setValueString(String valueString) {
+   _valueString  = strdup((valueString).c_str());
 }
 
 void Parameter::setValue(float value) {
+
    _value  = value;
+  _valueString  = strdup(((String)value).c_str());
 }
 
 void Parameter::setMin(float min) {
@@ -58,9 +60,9 @@ float Parameter::getValue() const
     return _value;
 }
 
-char* Parameter::getValueString() const
+String Parameter::getValueString() const
 {
-    return _valueString;
+    return String(_valueString);
 }
 
 void geturlDiawanTrial(String idDevice, String *link,String *name, float *offsite1, float *koreksi1) {
