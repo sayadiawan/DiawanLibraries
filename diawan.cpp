@@ -218,12 +218,24 @@ void connectDiawanWifi( String link, String email, String pass, String userId, S
   String jsonStr = "";
 
 
+   int count=0;
+  // Serial.print((*parameter)[26].getValue());
+  for (int i = 0; (*parameter)[i].getValue()!=NULL||(*parameter)[i].getValueString()!=""; i = i + 1) {
+     
+    count++;
+
+  }
+
   http.addHeader("Content-Type", "application/json");
 
   String parameter_string="{";
-  for (int i = 0; (*parameter)[i].getName()!=""; i = i + 1) {
-    Serial.println((*parameter)[i].getValue());
-    parameter_string=parameter_string+"\""+(*parameter)[i].getName()+"\":"+(*parameter)[i].getValue()+",";
+   for (int i = 0; i<count; i = i + 1) {
+   
+    if((*parameter)[i].getValue()!=NULL){
+      parameter_string=parameter_string+"\"data"+(i+1)+"\":"+(*parameter)[i].getValue()+",";
+    }else{
+      parameter_string=parameter_string+"\"data"+(i+1)+"\":\""+(*parameter)[i].getValueString()+"\",";
+    }
     
   }
    parameter_string=parameter_string+"\"wifi\":"+wifi+"}";
