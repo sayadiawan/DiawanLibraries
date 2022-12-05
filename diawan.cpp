@@ -190,7 +190,7 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
   }else {
     load = http.getString();
     Serial.print(load);
-    DynamicJsonDocument doc(1024);
+    DynamicJsonDocument doc(3024);
     String input = load;
     deserializeJson(doc, input);
     JsonObject obj = doc.as<JsonObject>();
@@ -202,6 +202,10 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
       (*parameter)[i].setMax(obj["result"]["max"]["max_data"+String(i+1)].as<float>());
     }
     *name = obj["result"]["name"].as<String>();
+
+    Serial.print("nama:");
+    
+    Serial.println(obj["result"]["name"].as<String>());
     *restart = obj["result"]["restart"].as<int>();
     *reset = obj["result"]["reset"].as<int>();
  
@@ -264,6 +268,7 @@ void connectDiawanWifi( String link, String email, String pass, String userId, S
       (*parameter)[i].setMax(obj["result"]["max"]["max_data"+String(i+1)].as<float>());
     }
     *name = obj["result"]["name"].as<String>();
+
     *restart = obj["result"]["restart"].as<int>();
     *reset = obj["result"]["reset"].as<int>();
  
