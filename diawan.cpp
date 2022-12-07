@@ -18,26 +18,51 @@ char* Parameter::getName() const
     return _name;
 }
 
-void Parameter::setVar(char* name, float offsite, float correction) {
-   _name  = name;
-    _offsite  = offsite;
-     _correction  = correction;
-       _value  = NULL;
-         _valueString  = "";
+void Parameter::setVar(char* name, float offsite, float correction, float a, float b, float c) {
+  _name  = name;
+  _offsite  = offsite;
+  _correction  = correction;
+  _value  = NULL;
+  _valueString  = "";
+  _a  = a;
+  _b  = b;
+  _c  = c;      
 }
 
 void Parameter::setValueString(String valueString) {
-   _valueString  = strdup((valueString).c_str());
+  if(_a!=NULL || _b!=NULL || _c!=NULL){
+    float value = (_a * (atof(strdup(((String)value).c_str())))) + (_b * (pow((atof(strdup(((String)value).c_str()))), 2))) + _c;
+    _valueString  = strdup(((String)value).c_str());
+  }else{
+    _valueString  = strdup((valueString).c_str());
+  }
 }
 
 void Parameter::setValue(float value) {
 
-   _value  = value;
-  _valueString  = strdup(((String)value).c_str());
+  if(_a!=NULL || _b!=NULL || _c!=NULL){
+    _value = (_a * value) + (_b * (pow(value, 2))) + _c;
+    _valueString  = strdup(((String)_value).c_str());
+  }else{
+    _value  = value;
+    _valueString  = strdup(((String)value).c_str());
+  }
 }
 
 void Parameter::setMin(float min) {
    _min  = min;
+}
+
+void Parameter::setA(float a) {
+   _a  = a;
+}
+
+void Parameter::setB(float b) {
+   _b  = b;
+}
+
+void Parameter::setC(float c) {
+   _c  = c;
 }
 
 void Parameter::setMax(float max) {
@@ -58,6 +83,31 @@ float Parameter::getCorrection() const
 float Parameter::getValue() const
 {
     return _value;
+}
+
+float Parameter::getMax() const
+{
+    return _max;
+}
+
+float Parameter::getMin() const
+{
+    return _min;
+}
+
+float Parameter::getA() const
+{
+    return _a;
+}
+
+float Parameter::getB() const
+{
+    return _b;
+}
+
+float Parameter::getC() const
+{
+    return _c;
 }
 
 String Parameter::getValueString() const
@@ -105,7 +155,7 @@ void geturlDiawan(String idDevice, String *link,String *name, Parameter **parame
     Serial.println(httpResponseCode);
     String payload = http.getString();
     Serial.println(payload);
-    DynamicJsonDocument doc(1024);
+    DynamicJsonDocument doc(3024);
     String input = payload;
     deserializeJson(doc, input);
     JsonObject obj = doc.as<JsonObject>();
@@ -118,11 +168,18 @@ void geturlDiawan(String idDevice, String *link,String *name, Parameter **parame
       int iterasi = i+1;
       float offset = obj["offsite"]["offsite_data"+String(iterasi)].as<float>();
       float correction = obj["correction"]["correction_data"+String(iterasi)].as<float>();
-      (*parameter)[i].setVar(strdup(("data"+String(iterasi)).c_str()),offset,correction);
+
+      float a = obj["regression"]["data"+String(iterasi)]["a"].as<float>();
+      float b = obj["regression"]["data"+String(iterasi)]["b"].as<float>();
+      float c = obj["regression"]["data"+String(iterasi)]["c"].as<float>();
+
+      
+
+      (*parameter)[i].setVar(strdup(("data"+String(iterasi)).c_str()),offset,correction,a,b,c);
     }
     for (i = i; i < 100; i++) {
       int iterasi = i+1;
-      (*parameter)[i].setVar(strdup(("data"+String(iterasi)).c_str()),NULL,NULL);
+      (*parameter)[i].setVar(strdup(("data"+String(iterasi)).c_str()),NULL,NULL,NULL,NULL,NULL);
     }
         
    *name = obj["name"].as<String>();
@@ -177,7 +234,6 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
   }
   parameter_string=parameter_string+"}";
 
-  Serial.print(parameter_string);
 
 
 
@@ -203,9 +259,6 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
     }
     *name = obj["result"]["name"].as<String>();
 
-    Serial.print("nama:");
-    
-    Serial.println(obj["result"]["name"].as<String>());
     *restart = obj["result"]["restart"].as<int>();
     *reset = obj["result"]["reset"].as<int>();
  

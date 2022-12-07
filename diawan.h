@@ -29,22 +29,31 @@ class Parameter {
     String getValueString() const; 
     
     float getMin() const;
+    float getA() const;
+    float getB() const;
+    float getC() const;
     float getMax() const; 
     float getOffsite() const; 
     float getCorrection() const; 
     
-    void setVar(char* name, float offsite, float correction);
+    void setVar(char* name, float offsite, float correction, float a, float b, float c);
     void setValue(float value);
     void setValueString(String valueString);
     void setOffsite(float offsite);
     void setMin(float min);
+    void setA(float a);
+    void setB(float b);
+    void setC(float c);
     void setMax(float max);
     char* _name ; 
     float _value ;
     char* _valueString ;
     float _offsite ; 
     float _min ; 
-    float _max ; 
+    float _max ;
+    float _a ;
+    float _b ;
+    float _c ; 
     float _correction ; 
       
 };
