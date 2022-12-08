@@ -61,6 +61,7 @@ class Parameter {
 
 void geturlDiawanTrial(String idDevice, String *link,String *name, float *offsite1, float *koreksi1);
 void geturlDiawan(String idDevice, String *link,String *name, Parameter **parameter);
+void geturlDiawan(String idDevice, String *link,String *name, Parameter **parameter,String *timestamp);
 void connectDiawanWifi( String link, String email, String pass, String userId, String idDevice,int wifi, String *name,int *restart ,int *reset, Parameter **parameter);
 void connectDiawan( String link, String email, String pass, String userId, String idDevice, String *name,int *restart ,int *reset, Parameter **parameter);
 void connectDiawan( String link, String email, String pass, String userId, String idDevice, String *name,int *restart ,int *reset, Parameter **parameter,String *timestamp);

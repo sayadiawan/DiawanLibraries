@@ -192,6 +192,56 @@ void geturlDiawan(String idDevice, String *link,String *name, Parameter **parame
 }
 
 
+void geturlDiawan(String idDevice, String *link,String *name, Parameter **parameter,String *timestamp) {
+  WiFiClient client;
+  HTTPClient http;
+  String serverPath =  "http://diawan.io/api/get_url/" + idDevice;
+  http.begin(client, serverPath.c_str());
+  int httpResponseCode = http.GET();
+
+  if (httpResponseCode > 0) {
+    Serial.print("HTTP Response code: ");
+    Serial.println(httpResponseCode);
+    String payload = http.getString();
+    Serial.println(payload);
+    DynamicJsonDocument doc(3024);
+    String input = payload;
+    deserializeJson(doc, input);
+    JsonObject obj = doc.as<JsonObject>();
+    *link = obj["url"]["push"].as<String>();
+    int count = obj["count"].as<int>();
+    *parameter = (Parameter *) malloc(sizeof(Parameter) * (100+1));
+
+    int i;
+    for (i = 0; i < count; i++) {
+      int iterasi = i+1;
+      float offset = obj["offsite"]["offsite_data"+String(iterasi)].as<float>();
+      float correction = obj["correction"]["correction_data"+String(iterasi)].as<float>();
+
+      float a = obj["regression"]["data"+String(iterasi)]["a"].as<float>();
+      float b = obj["regression"]["data"+String(iterasi)]["b"].as<float>();
+      float c = obj["regression"]["data"+String(iterasi)]["c"].as<float>();
+
+      
+
+      (*parameter)[i].setVar(strdup(("data"+String(iterasi)).c_str()),offset,correction,a,b,c);
+    }
+    for (i = i; i < 100; i++) {
+      int iterasi = i+1;
+      (*parameter)[i].setVar(strdup(("data"+String(iterasi)).c_str()),NULL,NULL,NULL,NULL,NULL);
+    }
+        
+   *name = obj["name"].as<String>();
+   *timestamp = obj["time"].as<String>();
+  }else {
+    Serial.print("Error code: ");
+    Serial.println(httpResponseCode);
+  }
+  http.end();
+  delay(3000);
+}
+
+
 
 
 
