@@ -23,18 +23,18 @@ class Parameter {
     Parameter(char* name, float value, float offsite);
     Parameter(char* name, float offsite);
     
-    char* getName() const;
+    char* getName() ;
 
-    float getValue() const; 
-    String getValueString() const; 
+    float getValue() ; 
+    String getValueString() ; 
     
-    float getMin() const;
-    float getA() const;
-    float getB() const;
-    float getC() const;
-    float getMax() const; 
-    float getOffsite() const; 
-    float getCorrection() const; 
+    float getMin() ;
+    float getA() ;
+    float getB() ;
+    float getC() ;
+    float getMax() ; 
+    float getOffsite() ; 
+    float getCorrection() ; 
     
     void setVar(char* name, float offsite, float correction, float a, float b, float c);
     void setValue(float value);
@@ -62,6 +62,7 @@ class Parameter {
 void geturlDiawanTrial(String idDevice, String *link,String *name, float *offsite1, float *koreksi1);
 void geturlDiawan(String idDevice, String *link,String *name, Parameter **parameter);
 void geturlDiawan(String idDevice, String *link,String *name, Parameter **parameter,String *timestamp);
+void geturlDiawan(String idDevice, String *link,String *name, Parameter **parameter,int sizeParameter,String *timestamp);
 void geturlDiawan(String idDevice, String *link,String *name, Parameter **parameter,String *timestamp,int *interval);
 void connectDiawanWifi( String link, String email, String pass, String userId, String idDevice,int wifi, String *name,int *restart ,int *reset, Parameter **parameter);
 void connectDiawan( String link, String email, String pass, String userId, String idDevice, String *name,int *restart ,int *reset, Parameter **parameter);

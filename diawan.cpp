@@ -13,7 +13,7 @@ Parameter::Parameter(char* name, float offsite) {
     _offsite  = offsite;
 }
 
-char* Parameter::getName() const
+char* Parameter::getName() 
 {
     return _name;
 }
@@ -72,45 +72,45 @@ void Parameter::setMax(float max) {
 void Parameter::setOffsite(float offsite) {
    _offsite  = offsite;
 }
-float Parameter::getOffsite() const
+float Parameter::getOffsite() 
 {
     return _offsite;
 }
-float Parameter::getCorrection() const
+float Parameter::getCorrection() 
 {
     return _correction;
 }
-float Parameter::getValue() const
+float Parameter::getValue() 
 {
     return _value;
 }
 
-float Parameter::getMax() const
+float Parameter::getMax() 
 {
     return _max;
 }
 
-float Parameter::getMin() const
+float Parameter::getMin() 
 {
     return _min;
 }
 
-float Parameter::getA() const
+float Parameter::getA() 
 {
     return _a;
 }
 
-float Parameter::getB() const
+float Parameter::getB() 
 {
     return _b;
 }
 
-float Parameter::getC() const
+float Parameter::getC() 
 {
     return _c;
 }
 
-String Parameter::getValueString() const
+String Parameter::getValueString() 
 {
     return String(_valueString);
 }
@@ -191,6 +191,55 @@ void geturlDiawan(String idDevice, String *link,String *name, Parameter **parame
   delay(3000);
 }
 
+
+void geturlDiawan(String idDevice, String *link,String *name, Parameter **parameter,int sizeParameter,String *timestamp) {
+   WiFiClient client;
+  HTTPClient http;
+  String serverPath =  "http://diawan.io/api/get_url/" + idDevice;
+  http.begin(client, serverPath.c_str());
+  int httpResponseCode = http.GET();
+
+  if (httpResponseCode > 0) {
+    Serial.print("HTTP Response code: ");
+    Serial.println(httpResponseCode);
+    String payload = http.getString();
+    Serial.println(payload);
+    DynamicJsonDocument doc(3024);
+    String input = payload;
+    deserializeJson(doc, input);
+    JsonObject obj = doc.as<JsonObject>();
+    *link = obj["url"]["push"].as<String>();
+    int count = obj["count"].as<int>();
+    *parameter = (Parameter *) malloc(sizeof(Parameter) * (sizeParameter+1));
+
+    int i;
+    for (i = 0; i < count; i++) {
+      int iterasi = i+1;
+      float offset = obj["offsite"]["offsite_data"+String(iterasi)].as<float>();
+      float correction = obj["correction"]["correction_data"+String(iterasi)].as<float>();
+
+      float a = obj["regression"]["data"+String(iterasi)]["a"].as<float>();
+      float b = obj["regression"]["data"+String(iterasi)]["b"].as<float>();
+      float c = obj["regression"]["data"+String(iterasi)]["c"].as<float>();
+
+      
+
+      (*parameter)[i].setVar(strdup(("data"+String(iterasi)).c_str()),offset,correction,a,b,c);
+    }
+    for (i = i; i < 100; i++) {
+      int iterasi = i+1;
+      (*parameter)[i].setVar(strdup(("data"+String(iterasi)).c_str()),NULL,NULL,NULL,NULL,NULL);
+    }
+        
+   *name = obj["name"].as<String>();
+   *timestamp = obj["time"].as<String>();
+  }else {
+    Serial.print("Error code: ");
+    Serial.println(httpResponseCode);
+  }
+  http.end();
+  delay(3000);
+}
 
 void geturlDiawan(String idDevice, String *link,String *name, Parameter **parameter,String *timestamp) {
   WiFiClient client;
