@@ -342,6 +342,76 @@ void geturlDiawan(String idDevice, String *link,String *name, Parameter **parame
 
 
 
+void connectDiawan( String link, String email, String pass, String userId, String idDevice, String *name,int *restart ,int *reset, Parameter **parameter,int sizeParameter,String *timestamp)  {
+  WiFiClient client;
+  HTTPClient http;
+  String load = "{}";
+  http.begin(client, link);
+  String jsonStr = "";
+
+       
+
+  int count=0;
+  // Serial.print((*parameter)[26].getValue());
+  for (int i = 0; ((*parameter)[i].getValue()!=NULL||(*parameter)[i].getValueString()!="")&& (i<sizeParameter); i = i + 1) {
+     
+    count++;
+
+  }
+
+   http.addHeader("Content-Type", "application/json");
+
+  String parameter_string="{";
+  for (int i = 0; i<count; i = i + 1) {
+    if((count-1)==i){
+      if((*parameter)[i].getValue()!=NULL){
+        parameter_string=parameter_string+"\"data"+(i+1)+"\":"+(*parameter)[i].getValue();
+      }else{
+        parameter_string=parameter_string+"\"data"+(i+1)+"\":\""+(*parameter)[i].getValueString()+"\"";
+      }
+    }else{
+      if((*parameter)[i].getValue()!=NULL){
+        parameter_string=parameter_string+"\"data"+(i+1)+"\":"+(*parameter)[i].getValue()+",";
+      }else{
+        parameter_string=parameter_string+"\"data"+(i+1)+"\":\""+(*parameter)[i].getValueString()+"\",";
+      }
+    }
+  }
+  parameter_string=parameter_string+"}";
+
+
+
+
+  int httpResponseCode = http.POST("{\"email\":\"" + email + "\",\"password\":\"" + pass + "\", \"userId\":\"" + userId + "\",\"idDevice\":\"" + idDevice + "\",\"value\":"+parameter_string+"}");
+  Serial.print("HTTP Response code: ");
+  Serial.println(httpResponseCode);
+
+  if (httpResponseCode != 200) {
+    Serial.println("Data tidak terkirim");
+  }else {
+    load = http.getString();
+    Serial.print(load);
+    DynamicJsonDocument doc(3024);
+    String input = load;
+    deserializeJson(doc, input);
+    JsonObject obj = doc.as<JsonObject>();
+    
+    // EDIT (tambahkan data menyesuaikan jumlah parameter yang digunakan)
+     for (int i = 0; (*parameter)[i].getOffsite()!=NULL; i = i + 1) {
+      (*parameter)[i].setOffsite(obj["result"]["offsite"]["offsite_value_data"+String(i+1)].as<float>());
+      (*parameter)[i].setMin(obj["result"]["min"]["min_data"+String(i+1)].as<float>());
+      (*parameter)[i].setMax(obj["result"]["max"]["max_data"+String(i+1)].as<float>());
+    }
+    *name = obj["result"]["name"].as<String>();
+
+    *restart = obj["result"]["restart"].as<int>();
+    *reset = obj["result"]["reset"].as<int>();
+    *timestamp= obj["result"]["newresult"]["timestamp"].as<String>();
+ 
+    http.end();
+    delay(3000);
+  }
+}
 
 
 void connectDiawan( String link, String email, String pass, String userId, String idDevice, String *name,int *restart ,int *reset, Parameter **parameter,String *timestamp)  {
