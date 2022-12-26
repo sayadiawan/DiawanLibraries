@@ -14,7 +14,16 @@
 #include <WiFiClient.h>
 #include <ArduinoJson.h>
 
-
+#define BUZ 33
+#define DEBUG 1
+#define endScreen
+#if DEBUG == 1
+#define debug(x) Serial.print(x)
+#define debugln(x) Serial.println(x)
+#else
+#define debug(x)
+#define debugln(x)
+#endif
 
 
 class Parameter {

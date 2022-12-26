@@ -226,7 +226,7 @@ void geturlDiawan(String idDevice, String *link,String *name, Parameter **parame
 
       (*parameter)[i].setVar(strdup(("data"+String(iterasi)).c_str()),offset,correction,a,b,c);
     }
-    for (i = i; i < 100; i++) {
+    for (i = i; i < sizeParameter; i++) {
       int iterasi = i+1;
       (*parameter)[i].setVar(strdup(("data"+String(iterasi)).c_str()),NULL,NULL,NULL,NULL,NULL);
     }
@@ -353,7 +353,7 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
 
   int count=0;
   // Serial.print((*parameter)[26].getValue());
-  for (int i = 0; ((*parameter)[i].getValue()!=NULL||(*parameter)[i].getValueString()!="")&& (i<sizeParameter); i = i + 1) {
+  for (int i = 0; i<sizeParameter; i = i + 1) {
      
     count++;
 
@@ -363,6 +363,9 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
 
   String parameter_string="{";
   for (int i = 0; i<count; i = i + 1) {
+    debugln();
+    debug('i=');
+    debugln(i);
     if((count-1)==i){
       if((*parameter)[i].getValue()!=NULL){
         parameter_string=parameter_string+"\"data"+(i+1)+"\":"+(*parameter)[i].getValue();
@@ -397,10 +400,12 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
     JsonObject obj = doc.as<JsonObject>();
     
     // EDIT (tambahkan data menyesuaikan jumlah parameter yang digunakan)
-     for (int i = 0; (*parameter)[i].getOffsite()!=NULL; i = i + 1) {
+     for (int i = 0; i<count; i = i + 1) {
       (*parameter)[i].setOffsite(obj["result"]["offsite"]["offsite_value_data"+String(i+1)].as<float>());
       (*parameter)[i].setMin(obj["result"]["min"]["min_data"+String(i+1)].as<float>());
       (*parameter)[i].setMax(obj["result"]["max"]["max_data"+String(i+1)].as<float>());
+        Serial.print('ossfite=');
+      Serial.println(obj["result"]["offsite"]["offsite_value_data"+String(i+1)].as<String>());
     }
     *name = obj["result"]["name"].as<String>();
 
@@ -469,7 +474,7 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
     JsonObject obj = doc.as<JsonObject>();
     
     // EDIT (tambahkan data menyesuaikan jumlah parameter yang digunakan)
-     for (int i = 0; (*parameter)[i].getOffsite()!=NULL; i = i + 1) {
+     for (int i = 0; i<count; i = i + 1) {
       (*parameter)[i].setOffsite(obj["result"]["offsite"]["offsite_value_data"+String(i+1)].as<float>());
       (*parameter)[i].setMin(obj["result"]["min"]["min_data"+String(i+1)].as<float>());
       (*parameter)[i].setMax(obj["result"]["max"]["max_data"+String(i+1)].as<float>());
@@ -540,7 +545,7 @@ void connectDiawan( String link, String email, String pass, String userId, Strin
     JsonObject obj = doc.as<JsonObject>();
     
     // EDIT (tambahkan data menyesuaikan jumlah parameter yang digunakan)
-     for (int i = 0; (*parameter)[i].getOffsite()!=NULL; i = i + 1) {
+     for (int i = 0;  i<count; i = i + 1) {
       (*parameter)[i].setOffsite(obj["result"]["offsite"]["offsite_value_data"+String(i+1)].as<float>());
       (*parameter)[i].setMin(obj["result"]["min"]["min_data"+String(i+1)].as<float>());
       (*parameter)[i].setMax(obj["result"]["max"]["max_data"+String(i+1)].as<float>());
@@ -603,7 +608,7 @@ void connectDiawanWifi( String link, String email, String pass, String userId, S
     JsonObject obj = doc.as<JsonObject>();
     
     // EDIT (tambahkan data menyesuaikan jumlah parameter yang digunakan)
-    for (int i = 0; (*parameter)[i].getName()!=""; i = i + 1) {
+    for (int i = 0;  i<count; i = i + 1) {
       (*parameter)[i].setOffsite(obj["result"]["offsite"]["offsite_value_data"+String(i+1)].as<float>());
       (*parameter)[i].setMin(obj["result"]["min"]["min_data"+String(i+1)].as<float>());
       (*parameter)[i].setMax(obj["result"]["max"]["max_data"+String(i+1)].as<float>());
